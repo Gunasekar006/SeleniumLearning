@@ -5,6 +5,7 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 
+import org.openqa.selenium.WebDriver;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
@@ -35,10 +36,23 @@ public class Listeners extends BaseClassTest implements ITestListener {
     public void onTestFailure(ITestResult result) {
         extentTest.get().fail(result.getThrowable());
         try {
-            extentTest.get().addScreenCaptureFromPath(getScreenshot("fail.png"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            driver = (WebDriver) result.getTestClass().getRealClass().getField("driver")
+                    .get(result.getInstance());
+
+        } catch (Exception e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
         }
+
+        String filePath = null;
+        try {
+
+            filePath = getScreenshot(result.getMethod().getMethodName(), driver);
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        extentTest.get().addScreenCaptureFromPath(filePath, result.getMethod().getMethodName());
         //
     }
 

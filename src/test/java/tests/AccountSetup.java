@@ -12,14 +12,14 @@ public class AccountSetup extends BaseClassTest  {
 String userName;
 String Password;
 
-    @Test(priority = 1)
+    @Test(priority = 1,retryAnalyzer= FailureRetry.class)
     public void accountSignUpTest(){
         CreateAccount signUp = homePage.createAccount();
         signUp.CreateAnAccount();
         String msg = signUp.verifyLogin();
         System.out.println(msg);
         Assert.assertEquals(msg,"Thank you for registering with Main Website Store.");
-        Assert.assertTrue(false);
+
 
     }
 

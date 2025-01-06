@@ -53,7 +53,7 @@ public class BaseClassTest {
 
     }
 
-    public String getScreenshot(String testName) throws IOException {
+    public String getScreenshot(String testName, WebDriver driver) throws IOException {
         TakesScreenshot ts = ((TakesScreenshot) driver);
         File src = ts.getScreenshotAs(OutputType.FILE);
         File dest = new File(System.getProperty("user.dir") + "//reports//" + testName + "//.png");

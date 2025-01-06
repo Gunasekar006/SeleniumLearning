@@ -19,7 +19,6 @@ public class OrderProduct extends BaseClassTest {
       page.addToCart("Overnight Duffle");
       page.proceedToCheckoutShipping();
 
-      Assert.assertTrue(false);
 
 
     }
