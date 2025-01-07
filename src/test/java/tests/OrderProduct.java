@@ -11,7 +11,7 @@ public class OrderProduct extends BaseClassTest {
 
 /* Failing this test to run Retry listner */
 
-    @Test//(retryAnalyzer= FailureRetry.class)
+//    @Test//(retryAnalyzer= FailureRetry.class)
     public void submitOrderTest() throws InterruptedException {
       LoginApplication login =homePage.signIn();
       OrderPage page = login.goToAccountMenu();

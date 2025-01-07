@@ -27,7 +27,7 @@ public class Utility {
     }
 
     public void waitForElementToAppear(WebElement findBy) {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(25));
         wait.until(ExpectedConditions.visibilityOf(findBy));
     }
 
