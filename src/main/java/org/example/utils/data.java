@@ -1,10 +1,8 @@
 package org.example.utils;
 
-import org.openqa.selenium.WebDriver;
-
 import java.util.Random;
 
-public class  POJO  {
+public class data {
     private String userNmae;
     private String password;
 

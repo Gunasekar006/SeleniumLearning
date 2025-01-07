@@ -1,6 +1,6 @@
 package org.example.pageobjects;
 
-import org.example.utils.POJO;
+import org.example.utils.data;
 import org.example.utils.Utility;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -10,7 +10,7 @@ import org.openqa.selenium.support.PageFactory;
 public class LoginApplication extends Utility {
 
     private WebDriver driver;
-POJO p;
+data p;
     public LoginApplication(WebDriver driver) {
         super(driver);
         this.driver = driver;
