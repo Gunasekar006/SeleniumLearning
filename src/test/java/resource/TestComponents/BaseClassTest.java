@@ -17,6 +17,7 @@ import org.testng.annotations.BeforeMethod;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.*;
 
@@ -56,9 +57,18 @@ public class BaseClassTest {
     public String getScreenshot(String testName, WebDriver driver) throws IOException {
         TakesScreenshot ts = ((TakesScreenshot) driver);
         File src = ts.getScreenshotAs(OutputType.FILE);
-        File dest = new File(System.getProperty("user.dir") + "//reports//" + testName + "//.png");
+//        File dest = new File(System.getProperty("user.dir") + "//reports//" + testName + "//.png");
+//        FileUtils.copyFile(src, dest);
+
+        Date date = new Date();
+        SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyyyhhmmss");
+        String strDate= formatter.format(date);
+
+
+        File dest = new File(System.getProperty("user.dir") + "//reports//" + testName + "//"+strDate+".png");
         FileUtils.copyFile(src, dest);
-        return System.getProperty("user.dir") + "//reports//" + testName + "//.png";
+        System.out.println(System.getProperty("user.dir") + "//reports//" + testName + "//"+strDate+".png");
+        return System.getProperty("user.dir") + "//reports//" + testName + "//"+strDate+".png";
 
 
     }

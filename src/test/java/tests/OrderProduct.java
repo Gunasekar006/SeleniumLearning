@@ -11,14 +11,15 @@ public class OrderProduct extends BaseClassTest {
 
 /* Failing this test to run Retry listner */
 
-    @Test(retryAnalyzer= FailureRetry.class)
+    @Test//(retryAnalyzer= FailureRetry.class)
     public void submitOrderTest() throws InterruptedException {
       LoginApplication login =homePage.signIn();
       OrderPage page = login.goToAccountMenu();
       page.SelectProductandItem("Gear", "Bags");
       page.addToCart("Overnight Duffle");
       page.proceedToCheckoutShipping();
-
+      String orderId= page.proceedToCheckoutPayments();
+        System.out.println("Order ID:"+orderId);
 
 
     }

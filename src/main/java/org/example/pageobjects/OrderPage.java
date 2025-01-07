@@ -1,14 +1,15 @@
 package org.example.pageobjects;
 
-import org.checkerframework.checker.units.qual.N;
 import org.example.utils.Utility;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class OrderPage extends Utility {
 
@@ -63,12 +64,14 @@ public class OrderPage extends Utility {
     @FindBy(xpath = "//*[text()='Place Order']")
     WebElement placeOrder;
 
-    @FindBy(id = "page-title-wrapper")
+    @FindBy(className = "page-title")
     WebElement placeOrderMessage;
 
     @FindBy(className = "checkout-success")
     WebElement orderID;
 
+@FindBy(xpath = "//*[text()='Place Order']")
+WebElement placeOrderButton;
 
     public void SelectProductandItem(String category, String product) {
         selectProduct(category, product);
@@ -103,7 +106,7 @@ public class OrderPage extends Utility {
 
                 firstname.sendKeys("Guna");
                 lastname.sendKeys("sekar");
-//                email.sendKeys(getUserNmae());
+                email.sendKeys(getUserNmae());
                 System.out.println("Checkout page has loaded..");
                 streetAddress1.sendKeys("street1");
                 city.sendKeys("Chennai");
@@ -116,7 +119,7 @@ public class OrderPage extends Utility {
 
 
 
-                Thread.sleep(20000);
+                Thread.sleep(5000);
                 Next.click();
             }
 
@@ -124,21 +127,20 @@ public class OrderPage extends Utility {
 
     }
 
-    public void proceedToCheckoutPayments   (){
+    public String proceedToCheckoutPayments   () throws InterruptedException {
+        Thread.sleep(5000);
                 waitForElementToAppear(placeOrder);
 
-        Actions action = new Actions(driver);
-        action.moveToElement(placeOrder).click(placeOrder).build().perform();
-//        JavascriptExecutor js = (JavascriptExecutor) driver;
-//        js.executeScript("document.querySelector(\"button[xpath=//*[text()='Place Order']\").click()");
+                new WebDriverWait(driver, Duration.ofSeconds(25))
+                .until(ExpectedConditions.elementToBeClickable(By.xpath("//*[text()='Place Order']"))).click();
 
 
-//        waitForElementToAppear(placeOrder);
-//        placeOrder.click();
         waitForElementToAppear(placeOrderMessage);
         System.out.println(placeOrderMessage.getText());
         waitForElementToAppear(orderID);
-        System.out.println("Order ID:"+orderID.getText());
+        return orderID.getText().replaceAll("[a-zA-Z]:#","");
+
+
     }
 
 
