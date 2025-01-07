@@ -138,7 +138,10 @@ WebElement placeOrderButton;
         waitForElementToAppear(placeOrderMessage);
         System.out.println(placeOrderMessage.getText());
         waitForElementToAppear(orderID);
-        return orderID.getText().replaceAll("[a-zA-Z]:#","");
+        System.out.println("****************");
+        System.out.println(orderID.getText());
+        System.out.println("****************");
+        return orderID.getText().replaceAll("[a-zA-Z#:'.]","").trim();
 
 
     }
