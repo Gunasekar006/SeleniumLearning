@@ -1,5 +1,6 @@
 package resource.TestComponents;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.maven.surefire.shared.io.FileUtils;
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -7,10 +8,13 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.example.pageobjects.HomePage;
 import org.openqa.selenium.OutputType;
+import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 
@@ -22,17 +26,17 @@ import java.time.Duration;
 import java.util.*;
 
 public class BaseClassTest {
-    public WebDriver driver;
+    //    public WebDriver driver;
     public HomePage homePage;
     XSSFWorkbook workBook;
     XSSFSheet sheet;
     XSSFCell cell;
     XSSFRow row;
     Properties prop;
-    FileInputStream fis ;
+    FileInputStream fis;
 
 
-
+    public static ThreadLocal<WebDriver> driver = new ThreadLocal<>();
 
     public WebDriver initializeDriver() throws IOException {
         prop = new Properties();
@@ -41,16 +45,21 @@ public class BaseClassTest {
 
         String browserName = prop.getProperty("browser");
         System.out.println("Test will run in " + browserName);
-        if (browserName.contains("chrome")) {
-            System.setProperty("webdriver.chrome.driver", "D://chromedriver-win64//chromedriver.exe");
-            driver = new ChromeDriver();
+        if (browserName.contains("chrome") && driver.get() == null) {
+            WebDriverManager.chromedriver().setup();
+            ChromeOptions option = new ChromeOptions();
+            option.setPageLoadStrategy(PageLoadStrategy.NORMAL);
+            driver.set(new ChromeDriver(option));
         } else if (browserName.contains("firefox")) {
-            driver = new FirefoxDriver();
+            WebDriverManager.firefoxdriver().setup();
+            FirefoxOptions option = new FirefoxOptions();
+            option.setPageLoadStrategy(PageLoadStrategy.NORMAL);
+            driver.set(new FirefoxDriver(option));
         }
 
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
-        driver.manage().window().maximize();
-        return driver;
+        driver.get().manage().timeouts().implicitlyWait(Duration.ofSeconds(20));
+        driver.get().manage().window().maximize();
+        return driver.get();
 
     }
 
@@ -62,14 +71,12 @@ public class BaseClassTest {
 
         Date date = new Date();
         SimpleDateFormat formatter = new SimpleDateFormat("ddMMyyyyhhmmss");
-        String strDate= formatter.format(date);
+        String strDate = formatter.format(date);
 
-
-        File dest = new File(System.getProperty("user.dir") + "//reports//" + testName + "//"+strDate+".png");
+        File dest = new File(System.getProperty("user.dir") + "//reports//" + testName + "//" + strDate + ".png");
         FileUtils.copyFile(src, dest);
-        System.out.println(System.getProperty("user.dir") + "//reports//" + testName + "//"+strDate+".png");
-        return System.getProperty("user.dir") + "//reports//" + testName + "//"+strDate+".png";
-
+        System.out.println(System.getProperty("user.dir") + "//reports//" + testName + "//" + strDate + ".png");
+        return System.getProperty("user.dir") + "//reports//" + testName + "//" + strDate + ".png";
 
     }
 
@@ -110,18 +117,15 @@ public class BaseClassTest {
         fis = new FileInputStream("src/main/java/SampleProjects/resource/Application.properties");
         prop.load(fis);
 
-        driver = initializeDriver();
-        homePage = new HomePage(driver);
+//      driver = initializeDriver();
+        homePage = new HomePage(initializeDriver());
         homePage.goTo(prop.getProperty("url"));
         return homePage;
-
     }
-
-
 
     @AfterMethod
     public void closeBrowser() {
-        driver.quit();
+        driver.get().quit();
     }
 
 

@@ -36,8 +36,8 @@ public class Listeners extends BaseClassTest implements ITestListener {
     public void onTestFailure(ITestResult result) {
         extentTest.get().fail(result.getThrowable());
         try {
-            driver = (WebDriver) result.getTestClass().getRealClass().getField("driver")
-                    .get(result.getInstance());
+//            driver = (WebDriver) result.getTestClass().getRealClass().getField("driver")
+//                    .get(result.getInstance());
 
         } catch (Exception e1) {
             // TODO Auto-generated catch block
@@ -47,7 +47,7 @@ public class Listeners extends BaseClassTest implements ITestListener {
         String filePath = null;
         try {
 
-            filePath = getScreenshot(result.getMethod().getMethodName(),driver);
+            filePath = getScreenshot(result.getMethod().getMethodName(),driver.get());
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

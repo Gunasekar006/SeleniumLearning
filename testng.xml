@@ -6,7 +6,7 @@
     </listeners>
     <test verbose="2" preserve-order="true" name="D:/Users/gkumarasamy/IdeaProjects/SeleniumLearning">
         <classes>
-            <class name="tests.AccountSetup"> </class>
+<!--            <class name="tests.AccountSetup"> </class>-->
             <class name="tests.OrderProduct"> </class>
         </classes>
     </test>

@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="All Test Suite" parallel="classes" thread-count="2">
+<suite name="All Test Suite" parallel="none">
     <test verbose="2" preserve-order="true" name="D:/Users/gkumarasamy/IdeaProjects/SeleniumLearning">
         <classes>
-            <class name="tests.AccountSetup">
+            <class name="tests2.Browser">
                 <parameter name="browser" value="chrome"></parameter>
                 <methods>
-                    <include name="searchBus"/>
-                    <include name="searchBus2"/>
-                    <include name="searchBus3"/>
+                    <include name="crossTest"/>
                 </methods>
             </class>
-            <class name="tests.ExcelUtils">
+            <class name="tests2.Browser">
                 <parameter name="browser" value="firefox"></parameter>
                 <methods>
-                    <include name="creareAccountTest"/>
+                    <include name="crossTest"/>
                 </methods>
             </class>
         </classes>
     </test>
+    <test name=""
 </suite>
